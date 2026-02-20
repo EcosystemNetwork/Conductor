@@ -39,11 +39,23 @@ export interface Payout {
   createdAt: number;
 }
 
+export interface ApiKey {
+  id: string;
+  key: string;
+  name: string;
+  ownerWallet?: string;
+  createdAt: number;
+  lastUsedAt?: number;
+  isActive: boolean;
+  permissions: string[];
+}
+
 interface Store {
   agents: Map<string, Agent>;
   tasks: Map<string, Task>;
   payouts: Map<string, Payout>;
   taskHistory: Task[];
+  apiKeys: Map<string, ApiKey>;
 }
 
 declare global {
@@ -57,6 +69,7 @@ function createStore(): Store {
     tasks: new Map(),
     payouts: new Map(),
     taskHistory: [],
+    apiKeys: new Map(),
   };
 }
 
