@@ -5,9 +5,10 @@ export const dynamic = 'force-dynamic';
 
 export async function DELETE(
     _request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const apiKey = dataStore.getApiKeyById(params.id);
+    const { id } = await params;
+    const apiKey = dataStore.getApiKeyById(id);
     if (!apiKey) {
         return NextResponse.json({ error: 'Key not found' }, { status: 404 });
     }

@@ -1,5 +1,6 @@
+"use client";
+
 import { useState, useEffect, useCallback } from 'react';
-import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import type { Agent, Task, Payout } from '../lib/store';
 
@@ -7,21 +8,21 @@ const WalletConnect = dynamic(() => import('../components/WalletConnect'), { ssr
 
 // ── colour tokens (match index.html design language) ──────────────────────────
 const C = {
-  dark:    '#06060A',
-  dark2:   '#0C0C14',
-  dark3:   '#13131E',
-  dark4:   '#1A1A28',
-  gray:    '#7878A0',
-  light:   '#EEEEF6',
-  cyan:    '#00D4FF',
-  blue:    '#4D6BFF',
-  purple:  '#A855F7',
+  dark: '#06060A',
+  dark2: '#0C0C14',
+  dark3: '#13131E',
+  dark4: '#1A1A28',
+  gray: '#7878A0',
+  light: '#EEEEF6',
+  cyan: '#00D4FF',
+  blue: '#4D6BFF',
+  purple: '#A855F7',
   magenta: '#E040A0',
-  coral:   '#FF6B6B',
-  amber:   '#FFB340',
-  green:   '#22C55E',
-  red:     '#EF4444',
-  yellow:  '#EAB308',
+  coral: '#FF6B6B',
+  amber: '#FFB340',
+  green: '#22C55E',
+  red: '#EF4444',
+  yellow: '#EAB308',
 };
 
 // ── tiny helper components ────────────────────────────────────────────────────
@@ -85,12 +86,12 @@ async function post(url: string, body: unknown) {
 // ── main page ─────────────────────────────────────────────────────────────────
 
 export default function Dashboard() {
-  const [agents, setAgents]   = useState<Agent[]>([]);
-  const [tasks, setTasks]     = useState<Task[]>([]);
+  const [agents, setAgents] = useState<Agent[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [payouts, setPayouts] = useState<Payout[]>([]);
   const [history, setHistory] = useState<Task[]>([]);
-  const [error, setError]     = useState('');
-  const [notice, setNotice]   = useState('');
+  const [error, setError] = useState('');
+  const [notice, setNotice] = useState('');
 
   const refresh = useCallback(async () => {
     try {
@@ -116,7 +117,7 @@ export default function Dashboard() {
   }, [refresh]);
 
   const showNotice = (msg: string) => { setNotice(msg); setTimeout(() => setNotice(''), 3500); };
-  const showError  = (msg: string) => { setError(msg);  setTimeout(() => setError(''),  4000); };
+  const showError = (msg: string) => { setError(msg); setTimeout(() => setError(''), 4000); };
 
   // register agent form
   const agentForm = useForm({ name: '', skills: '', wallet: '' });
@@ -170,31 +171,26 @@ export default function Dashboard() {
   }
 
   // totals
-  const totalEarned  = agents.reduce((s, a) => s + a.totalEarned, 0);
-  const activeTasks  = tasks.filter((t) => t.status === 'assigned').length;
+  const totalEarned = agents.reduce((s, a) => s + a.totalEarned, 0);
+  const activeTasks = tasks.filter((t) => t.status === 'assigned').length;
   const pendingTasks = tasks.filter((t) => t.status === 'pending').length;
 
   // ── styles ──────────────────────────────────────────────────────────────────
   const tableStyle: React.CSSProperties = { width: '100%', borderCollapse: 'collapse', fontSize: 13 };
-  const thStyle: React.CSSProperties    = { textAlign: 'left', padding: '8px 12px', color: C.gray, fontWeight: 600,
+  const thStyle: React.CSSProperties = {
+    textAlign: 'left', padding: '8px 12px', color: C.gray, fontWeight: 600,
     fontSize: 11, letterSpacing: '.08em', textTransform: 'uppercase',
-    borderBottom: `1px solid rgba(255,255,255,.07)` };
-  const tdStyle: React.CSSProperties    = { padding: '10px 12px', borderBottom: `1px solid rgba(255,255,255,.04)`, color: C.light };
+    borderBottom: `1px solid rgba(255,255,255,.07)`
+  };
+  const tdStyle: React.CSSProperties = { padding: '10px 12px', borderBottom: `1px solid rgba(255,255,255,.04)`, color: C.light };
   const inputStyle: React.CSSProperties = {
     background: C.dark3, border: `1px solid rgba(255,255,255,.1)`, borderRadius: 8,
     color: C.light, padding: '8px 12px', fontSize: 13, outline: 'none', width: '100%',
   };
-  const cardStyle: React.CSSProperties  = { background: C.dark2, border: `1px solid rgba(255,255,255,.06)`, borderRadius: 16, padding: 24, marginBottom: 24 };
+  const cardStyle: React.CSSProperties = { background: C.dark2, border: `1px solid rgba(255,255,255,.06)`, borderRadius: 16, padding: 24, marginBottom: 24 };
 
   return (
     <>
-      <Head>
-        <title>Conductor — Agent Network Dashboard</title>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-      </Head>
-
       <div style={{ background: C.dark, minHeight: '100vh', fontFamily: "'Outfit', sans-serif", color: C.light }}>
 
         {/* nav */}
@@ -241,12 +237,12 @@ export default function Dashboard() {
 
           {/* stats */}
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 28 }}>
-            <StatCard label="Agents"          value={agents.length}   color={C.purple} />
-            <StatCard label="Active Tasks"    value={activeTasks}     color={C.cyan}   />
-            <StatCard label="Pending Tasks"   value={pendingTasks}    color={C.amber}  />
+            <StatCard label="Agents" value={agents.length} color={C.purple} />
+            <StatCard label="Active Tasks" value={activeTasks} color={C.cyan} />
+            <StatCard label="Pending Tasks" value={pendingTasks} color={C.amber} />
             <StatCard label="Completed Tasks" value={history.filter(h => h.status === 'completed').length} color={C.green} />
-            <StatCard label="Total Earned"    value={`${totalEarned.toFixed(2)}`} color={C.magenta} />
-            <StatCard label="Payouts"         value={payouts.length}  color={C.blue}   />
+            <StatCard label="Total Earned" value={`${totalEarned.toFixed(2)}`} color={C.magenta} />
+            <StatCard label="Payouts" value={payouts.length} color={C.blue} />
           </div>
 
           {/* two-column form row */}
@@ -276,7 +272,7 @@ export default function Dashboard() {
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
                   <input style={inputStyle} placeholder="Reward" type="number" min="0" step="0.01" value={taskForm.values.reward} onChange={taskForm.set('reward')} />
                   <select style={{ ...inputStyle, appearance: 'none' }} value={taskForm.values.priority} onChange={taskForm.set('priority')}>
-                    {[1,2,3,4,5].map(p => <option key={p} value={p}>Priority {p}</option>)}
+                    {[1, 2, 3, 4, 5].map(p => <option key={p} value={p}>Priority {p}</option>)}
                   </select>
                   <input style={inputStyle} placeholder="Max retries" type="number" min="0" max="10" value={taskForm.values.maxRetries} onChange={taskForm.set('maxRetries')} />
                 </div>
@@ -317,7 +313,7 @@ export default function Dashboard() {
                           <td style={tdStyle}><HealthDot health={a.health} /></td>
                           <td style={tdStyle}>{a.tasksCompleted}</td>
                           <td style={tdStyle}>{a.totalEarned.toFixed(2)}</td>
-                          <td style={tdStyle}><span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: C.gray }}>{a.walletAddress ? `${a.walletAddress.slice(0,8)}…` : '—'}</span></td>
+                          <td style={tdStyle}><span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: C.gray }}>{a.walletAddress ? `${a.walletAddress.slice(0, 8)}…` : '—'}</span></td>
                         </tr>
                       ))}
                     </tbody>
