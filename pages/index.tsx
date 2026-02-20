@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
+import { ConnectButton } from 'thirdweb/react';
+import { thirdwebClient } from '../lib/thirdwebClient';
 import type { Agent, Task, Payout } from '../lib/store';
 
 // ── colour tokens (match index.html design language) ──────────────────────────
@@ -207,9 +209,12 @@ export default function Dashboard() {
             <img src="/ConductorLogo.png" alt="Conductor" style={{ width: 30, height: 30, borderRadius: 8 }} />
             <span style={{ fontWeight: 800, fontSize: 16, color: C.light, letterSpacing: '-.02em' }}>Conductor</span>
           </a>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: C.gray }}>live dashboard</span>
-            <span style={{ width: 7, height: 7, borderRadius: '50%', background: C.green, animation: 'blink 2s infinite', display: 'inline-block' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: C.gray }}>live dashboard</span>
+              <span style={{ width: 7, height: 7, borderRadius: '50%', background: C.green, animation: 'blink 2s infinite', display: 'inline-block' }} />
+            </div>
+            <ConnectButton client={thirdwebClient} />
           </div>
         </nav>
 
