@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
-import { ConnectButton } from 'thirdweb/react';
-import { thirdwebClient } from '../lib/thirdwebClient';
+import dynamic from 'next/dynamic';
 import type { Agent, Task, Payout } from '../lib/store';
+
+const WalletConnect = dynamic(() => import('../components/WalletConnect'), { ssr: false });
 
 // ── colour tokens (match index.html design language) ──────────────────────────
 const C = {
@@ -214,7 +215,7 @@ export default function Dashboard() {
               <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: C.gray }}>live dashboard</span>
               <span style={{ width: 7, height: 7, borderRadius: '50%', background: C.green, animation: 'blink 2s infinite', display: 'inline-block' }} />
             </div>
-            <ConnectButton client={thirdwebClient} />
+            <WalletConnect />
           </div>
         </nav>
 
