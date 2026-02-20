@@ -1,8 +1,7 @@
-import { createThirdwebClient } from 'thirdweb';
+import { createThirdwebClient, ThirdwebClient } from 'thirdweb';
 
 const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
-if (!clientId) {
-  throw new Error('NEXT_PUBLIC_THIRDWEB_CLIENT_ID environment variable is not set');
-}
 
-export const thirdwebClient = createThirdwebClient({ clientId });
+export const thirdwebClient: ThirdwebClient | null = clientId
+  ? createThirdwebClient({ clientId })
+  : null;
