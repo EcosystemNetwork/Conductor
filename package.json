@@ -19,5 +19,13 @@
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
     "typescript": "^5.0.0"
+  },
+  "overrides": {
+    "@walletconnect/sign-client": "2.23.6",
+    "@walletconnect/ethereum-provider": "2.23.6",
+    "@walletconnect/universal-provider": "2.23.6",
+    "@walletconnect/core": "2.23.6",
+    "@walletconnect/types": "2.23.6",
+    "@walletconnect/utils": "2.23.6"
   }
 }
